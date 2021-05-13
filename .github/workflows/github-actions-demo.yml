@@ -20,3 +20,4 @@ jobs:
           registry: docker.pkg.github.com
           repository: my-org/my-repo/my-image
           tag_with_ref: true
+          
