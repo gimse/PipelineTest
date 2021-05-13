@@ -7,7 +7,7 @@ A flask app deployed in
 - ``virtualenv virtualenv``
 - ``source virtualenv/bin/activate``
 - ``pip install -r requirements.txt``
-- ``flask run``
+- ``uvicorn main:app --reload``
 
 ## Setup (Docker)
 - Install [Docker](https://www.docker.com) (20.10.6)

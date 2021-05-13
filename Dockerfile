@@ -2,7 +2,7 @@ FROM python:3.8-slim-buster
 
 EXPOSE 8000
 
-COPY requirements.txt main.py /.
+COPY requirements.txt main.py ./
 
 RUN pip install -r requirements.txt
 
