@@ -23,6 +23,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
+          registry: docker.pkg.github.com
           tags: gimse/app:latest
           secrets: |
             GIT_AUTH_TOKEN=${{ secrets.GITHUB_TOKEN  }}
