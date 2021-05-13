@@ -16,5 +16,5 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: docker.pkg.github.com
-          repository: gimse/my-repo/my-image
+          repository: gimse2/my-repo/my-image
           tag_with_ref: true
