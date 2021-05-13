@@ -1,5 +1,7 @@
-name: GitHub Actions Demo
-on: [push]
+name: Publish Docker image
+on:
+  release:
+    types: [published]
 jobs:
   push_to_registry:
     name: Push Docker image to GitHub Packages
@@ -8,11 +10,13 @@ jobs:
       packages: write
       contents: read
     steps:
-      - uses: actions/checkout@v2 # Checking out the repo
-
-      - name: Build and Publish head Docker image
-        uses: VaultVulp/gp-docker-action@1.1.8
+      - name: Check out the repo
+        uses: actions/checkout@v2
+      - name: Push to GitHub Packages
+        uses: docker/build-push-action@v1
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }} # Provide GITHUB_TOKEN to login into the GitHub Packages
-          image-name: my-cool-service # Provide Docker image name
-          image-tag: head # Provide Docker image tag
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          registry: docker.pkg.github.com
+          repository: my-org/my-repo/my-image
+          tag_with_ref: true
