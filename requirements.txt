@@ -1,1 +1,2 @@
-Flask==2.0.0
+fastapi==0.65.1
+uvicorn==0.13.4
