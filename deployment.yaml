@@ -1,0 +1,22 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pipeline-test-deployment
+  labels:
+    app: pipeline-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pipeline-test
+  template:
+    metadata:
+      labels:
+        app: pipeline-test
+    spec:
+      containers:
+      - name: pipeline-test-container
+        image: docker.pkg.github.com/gimse/pipelinetest/pipeline-test:head
+        ports:
+        - containerPort: 8000
