@@ -1,19 +1,36 @@
-name: GitHub Actions Demo
-on: [push]
+
+name: '[builder] CI for releases'
+
+on:
+    push:
+        branches:
+            - main
+
 jobs:
-  push_to_registry:
-    name: Push Docker image to GitHub Packages
-    runs-on: ubuntu-latest
-    permissions:
-      packages: write
-      contents: read
-    steps:
-      - uses: actions/checkout@v2 # Checking out the repo
-
-      - name: Build and Publish head Docker image
-        uses: VaultVulp/gp-docker-action@1.1.8
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }} # Provide GITHUB_TOKEN to login into the GitHub Packages
-          image-name: pipeline-test # Provide Docker image name
-          image-tag: head # Provide Docker image tag
-
+    release:
+        runs-on: ubuntu-latest
+        steps:
+        -
+            name: Checkout
+            uses: actions/checkout@v1
+        -
+            name: Dockerhub login
+            env:
+                DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+                DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+            run: |
+                echo "${DOCKER_PASSWORD}" | docker login --username ${DOCKER_USERNAME} --password-stdin
+        -
+            name: Set up Docker Buildx
+            id: buildx
+            uses: crazy-max/ghaction-docker-buildx@v1
+            with:
+                version: latest
+        -
+            name: Build dockerfile (with push)
+            run: |
+                docker buildx build \
+                --platform=linux/amd64,linux/arm/v7,linux/arm64 \
+                --output "type=image,push=true" \
+                --file ./Dockerfile . \
+                --tag $(echo "${DOCKER_USERNAME}" | tr '[:upper:]' '[:lower:]')/ttrss:latest
