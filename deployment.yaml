@@ -17,6 +17,6 @@ spec:
     spec:
       containers:
       - name: pipeline-test-container
-        image: gimsedev/private-cluster:head
+        image: gimsedev/private-cluster:latest
         ports:
         - containerPort: 8000
