@@ -21,6 +21,13 @@ jobs:
             run: |
                 echo "${GITHUB_TOKEN}" | docker login ghcr.io --username ${GITHUB_USERNAME} --password-stdin
         -
+        name: Build and push (Basic)
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: ghcr.io/gimse/pipeline-test:4.0
+        -
             name: Set up Docker Buildx
             id: buildx
             uses: crazy-max/ghaction-docker-buildx@v1
