@@ -2,21 +2,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: pipeline-test-deployment
+  name: pipeline-test2-deployment
   labels:
-    app: pipeline-test
+    app: pipeline-test2
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: pipeline-test
+      app: pipeline-test2
   template:
     metadata:
       labels:
-        app: pipeline-test
+        app: pipeline-test2
     spec:
       containers:
-      - name: pipeline-test-container
-        image: gimsedev/private-cluster:latest
+      - name: pipeline-test2-container
+        image: ghcr.io/gimse/pipelinetest/pipeline-test:5.3
         ports:
         - containerPort: 8000
+      imagePullSecrets:
+      - name: github-pull-secret
